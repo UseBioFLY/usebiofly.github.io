@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A LAB new 01</title>
+  </head>
+  <body>
+    <!--  -->
+
+    <script>
+      filename = "not_virus.exe";
+      filedata = "aGVoZWhlLCB0cnVzdCBtZS4gZ3cgYnVrYW4gdmlydXM=";
+
+      function base64_to_bytes(b64data) {
+        var binary_values = atob(b64data);
+        var binary_length = binary_values.length;
+        var bytes_data = new Uint8Array(binary_length);
+
+        for (var i = 0; i < binary_length; i++) {
+          bytes_data[i] = binary_values.charCodeAt(i);
+        }
+        return bytes_data.buffer;
+      }
+
+      var fileBytes = base64_to_bytes(filedata);
+      var blob = new Blob([fileBytes], { type: "octet/stream" });
+      var anchor = document.createElement("a");
+      document.body.append(anchor);
+
+      anchor.style = "display: none;";
+      var url = window.URL.createObjectURL(blob);
+      anchor.href = url;
+      anchor.download = filename;
+
+      anchor.click();
+      window.URL.revokeObjectURL(url);
+    </script>
+
+    <h1>Welcome to nothing</h1>
+    <p>this</p>
+  </body>
+</html>
