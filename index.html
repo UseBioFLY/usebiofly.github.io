@@ -1,304 +1,425 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
   <head>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Portfolio - UseBioFLY</title>
+    <meta name="description" content="Portfolio & CV - Cybersecurity" />
+    <style>
+      :root {
+        --bg: #0f1724; /* dark navy */
+        --card: #0b1220;
+        --accent: #06b6d4; /* cyan */
+        --muted: #94a3b8;
+        --glass: rgba(255, 255, 255, 0.03);
+        --radius: 14px;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: linear-gradient(180deg, #071029 0%, #071326 60%);
+        color: #e6eef6;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 36px auto;
+        padding: 28px;
+      }
+      .card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        border-radius: var(--radius);
+        box-shadow: 0 8px 30px rgba(2, 6, 23, 0.7);
+        overflow: hidden;
+      }
 
-    <!-- my CSS -->
-    <link rel="stylesheet" href="css/style.css" />
-    <!-- /my CSS -->
+      .grid {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+      }
+      @media (max-width: 880px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .left {
+          order: 2;
+        }
+      }
 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Web PRAVDOVA</title>
+      .left {
+        padding: 28px;
+        border-right: 1px solid rgba(255, 255, 255, 0.03);
+        min-height: 360px;
+      }
+      .right {
+        padding: 28px;
+      }
+
+      .avatar {
+        width: 96px;
+        height: 96px;
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--glass);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 28px;
+        color: var(--accent);
+      }
+      h1 {
+        margin: 0;
+        font-size: 26px;
+      }
+      .role {
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      .contact {
+        margin-top: 18px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .contact b {
+        color: #e6eef6;
+      }
+
+      .section {
+        margin-top: 20px;
+      }
+      .section h3 {
+        margin: 0 0 10px 0;
+        font-size: 15px;
+      }
+      .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .skill {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 8px 10px;
+        border-radius: 10px;
+        font-size: 13px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 10px;
+        background: linear-gradient(90deg, var(--accent) 0%, #60a5fa 120%);
+        color: #042027;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .muted {
+        color: var(--muted);
+      }
+
+      /* Certificate cards */
+      .cert-row {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .cert {
+        background: var(--card);
+        padding: 12px;
+        border-radius: 12px;
+        min-width: 220px;
+        flex: 1 1 220px;
+      }
+      .cert small {
+        display: block;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .cert .thumb {
+        height: 110px;
+        border-radius: 8px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.03));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .cert .thumb img {
+        max-width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cert-actions {
+        margin-top: 10px;
+        display: flex;
+        gap: 8px;
+      }
+
+      /* About & projects */
+      .about p {
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .project {
+        background: var(--glass);
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+      }
+
+      /* Modal */
+      .modal {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(2, 6, 23, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal.open {
+        display: flex;
+      }
+      .modal .inner {
+        width: 90%;
+        max-width: 900px;
+        height: 80vh;
+        background: #01050a;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .modal .toolbar {
+        padding: 10px 12px;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .modal .viewer {
+        flex: 1;
+        background: #081125;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal embed,
+      .modal img {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      footer {
+        margin-top: 18px;
+        padding: 12px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      /* print friendly */
+      @media print {
+        body {
+          background: #fff;
+          color: #000;
+        }
+        .card {
+          box-shadow: none;
+          border-radius: 0;
+        }
+        .left {
+          border-right: none;
+        }
+        .btn {
+          display: none;
+        }
+        .modal {
+          display: none;
+        }
+      }
+    </style>
   </head>
-
-  <body id="home" class="scrollspy">
-    <!-- navbar -->
-    <div class="navbar-fixed">
-      <ul id="dropdown1" class="dropdown-content">
-        <li><a href="#!">one</a></li>
-        <li><a href="#!">two</a></li>
-        <li class="divider"></li>
-        <li><a href="#!">three</a></li>
-      </ul>
-      <nav class="blue darken-4">
-        <div class="container">
-          <div class="nav-wrapper">
-            <a href="#home" class="brand-logo">PRAV</a>
-            <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#clients">Clients</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#portfolio">Portfolio</a></li>
-              <li><a href="#contact">Contact Us</a></li>
-              <li>
-                <a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
-
-    <!-- /navbar -->
-
-    <!-- sidenav -->
-    <ul class="sidenav" id="mobile-nav">
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#clients">Clients</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#contact">Contact Us</a></li>
-    </ul>
-
-    <!-- /sidenav -->
-
-    <!-- slider -->
-    <div class="slider">
-      <ul class="slides">
-        <li>
-          <img src="img/slider/1.png" />
-          <!-- random image -->
-          <div class="caption left-align">
-            <h3>This is our big Tagline!</h3>
-            <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-          </div>
-        </li>
-        <li>
-          <img src="img/slider/2.png" />
-          <!-- random image -->
-          <div class="caption right-align">
-            <h3>This is our big Tagline!</h3>
-            <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-          </div>
-        </li>
-        <li>
-          <img src="img/slider/3.png" />
-          <!-- random image -->
-          <div class="caption center-align">
-            <h3>This is our big Tagline!</h3>
-            <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <!-- /slider -->
-
-    <!-- About Us -->
-    <section id="about" class="about scrollspy">
-      <div class="container">
-        <div class="row">
-          <h3 class="center light grey-text text-darken-3">About Us</h3>
-          <div class="col m6 light">
-            <h5>We Are Profesional</h5>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum nihil accusantium consectetur voluptatum quo natus velit veniam deserunt nesciunt necessitatibus, enim architecto nulla exercitationem ut provident repellendus,
-              tempora numquam. Quo!
-            </p>
-          </div>
-          <div class="col m6 light">
-            <p>WEB DEVELOPMENT</p>
-            <div class="progress">
-              <div class="determinate blue" style="width: 90%"></div>
-            </div>
-            <p>MOBILE APP DEVELOPMENT</p>
-            <div class="progress">
-              <div class="determinate blue" style="width: 80%"></div>
-            </div>
-            <p>GAME DEVELOPMENT</p>
-            <div class="progress">
-              <div class="determinate blue" style="width: 75%"></div>
+  <body>
+    <div class="container">
+      <div class="card grid">
+        <aside class="left">
+          <div style="display: flex; gap: 12px; align-items: center">
+            <div class="avatar">NM</div>
+            <div>
+              <h1 id="full-name">UseBioFLY</h1>
+              <div class="role">Cybersecurity Enthusiast</div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-    <!-- /About Us -->
 
-    <!-- Clients (parallax) -->
-    <div id="clients" class="parallax-container scrollspy">
-      <div class="parallax"><img src="img/slider/4.png" alt="" /></div>
+          <div class="contact section">
+            <div><b>Alamat:</b> <span id="address">---</span></div>
+            <div><b>Email:</b> <a id="email" href="mailto:email@gmail.com">---</a></div>
+            <div><b>Telepon:</b> <span id="phone">---</span></div>
+          </div>
 
-      <!-- Our Clients -->
-      <div class="container clients">
-        <h3 class="center light white-text">Our Clients</h3>
-        <div class="row">
-          <div class="col m4 s12 center">
-            <img src="img/clients/tokopedia.png" alt="" />
-          </div>
-          <div class="col m4 s12 center">
-            <img src="img/clients/gojek.png" alt="" />
-          </div>
-          <div class="col m4 s12 center">
-            <img src="img/clients/traveloka.png" alt="" />
-          </div>
-        </div>
-      </div>
-      <!-- /Our Clients -->
-    </div>
-    <!-- /Clients (parallax) -->
-
-    <!-- services -->
-    <section id="services" class="services grey lighten-3 scrollspy">
-      <div class="container">
-        <div class="row">
-          <h3 class="light center grey-text text-darken-3">Our Services</h3>
-          <div class="col m4 s12">
-            <div class="card-panel center">
-              <i class="material-icons medium">desktop_windows</i>
-              <h5>Wep Development</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, fugit!</p>
+          <div class="section">
+            <h3>Skills</h3>
+            <div class="skills">
+              <div class="skill">Web App Pentesting</div>
+              <div class="skill">XSS</div>
+              <div class="skill">SQL Injection</div>
+              <div class="skill">Burp Suite</div>
+              <div class="skill">Python</div>
             </div>
           </div>
-          <div class="col m4 s12">
-            <div class="card-panel center">
-              <i class="material-icons medium">developer_mode</i>
-              <h5>Mobile App</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, fugit!</p>
-            </div>
-          </div>
-          <div class="col m4 s12">
-            <div class="card-panel center">
-              <i class="material-icons medium">games</i>
-              <h5>Game Development</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, fugit!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- /services -->
 
-    <!-- portfolio -->
-    <section id="portfolio" class="portfolio scrollspy">
-      <div class="container">
-        <h3 class="light center grey-text text-darken-3">Portfolio</h3>
-        <div class="row">
-          <div class="col m3 s12">
-            <img src="img/portfolio/1.png" class="responsive-img materialboxed" alt="" />
+          <div class="section">
+            <h3>Quick actions</h3>
+            <a class="btn" href="#" onclick="downloadPDF()">Download CV (PDF)</a>
           </div>
-          <div class="col m3 s12">
-            <img src="img/portfolio/2.png" class="responsive-img materialboxed" alt="" />
-          </div>
-          <div class="col m3 s12">
-            <img src="img/portfolio/3.png" class="responsive-img materialboxed" alt="" />
-          </div>
-          <div class="col m3 s12">
-            <img src="img/portfolio/4.png" class="responsive-img materialboxed" alt="" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col m3 s12">
-            <img src="img/portfolio/5.png" class="responsive-img materialboxed" alt="" />
-          </div>
-          <div class="col m3 s12">
-            <img src="img/portfolio/6.png" class="responsive-img materialboxed" alt="" />
-          </div>
-          <div class="col m3 s12">
-            <img src="img/portfolio/1.png" class="responsive-img materialboxed" alt="" />
-          </div>
-          <div class="col m3 s12">
-            <img src="img/portfolio/2.png" class="responsive-img materialboxed" alt="" />
-          </div>
-        </div>
-      </div>
-    </section>
+        </aside>
 
-    <!-- /portfolio -->
-
-    <!-- Contact Us -->
-    <section id="contact" class="contact grey lighten-3 scrollspy">
-      <div class="container">
-        <h3 class="light grey-text text-darken-3 center">Contact Us</h3>
-        <div class="row">
-          <div class="col m5 s12">
-            <div class="card-pannel blue darken-3 center white-text">
-              <i class="material-icons gambar-email">email</i>
-              <h5>Contact</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, deleniti.</p>
-            </div>
-            <ul class="collection with-header">
-              <li class="collection-header">Our Office</li>
-              <li class="collection-item">Web PRAV</li>
-              <li class="collection-item">Jl. Auswitch No. 888, Vladivostok</li>
-              <li class="collection-item">West Front, Germany</li>
-              <li class="collection-item">Web PRAV</li>
-            </ul>
+        <main class="right">
+          <div class="section about">
+            <h3>About</h3>
+            <p>I just tried and did a few things, and that's it</p>
           </div>
 
-          <div class="col m7 s12">
-            <form action="">
-              <div class="card-panel">
-                <h5>Please fill out this pannel</h5>
-                <div class="input-field">
-                  <input type="text" name="name" id="name" required class="validate" />
-                  <label for="name">Name</label>
+          <div class="section">
+            <h3>Certificate</h3>
+            <div class="cert-row">
+              <!-- Certificate 1: edit data-file to point to your file (jpg/png/pdf) -->
+              <div class="cert">
+                <small>Certified Web Penetration Tester</small>
+                <div class="thumb"><img src="certs/screnshot-1.png" alt="Sertifikat 1" onerror="this.style.display='none'" /></div>
+                <div class="cert-actions">
+                  <button class="btn" onclick="openCert('certs/cert1.pdf','pdf')">Detail</button>
+                  <a class="btn" href="certs/cert1.pdf" target="_blank">Download</a>
                 </div>
-                <div class="input-field">
-                  <input type="email" name="email" id="email" class="validate" />
-                  <label for="email">Email</label>
-                </div>
-                <div class="input-field">
-                  <input type="text" name="phone" id="phone" />
-                  <label for="phone">Phone Number</label>
-                </div>
-                <div class="input-field">
-                  <textarea name="message" id="message" class="materialize-textarea"></textarea>
-                  <label for="message">Message</label>
-                </div>
-                <button type="submit" class="btn blur darken-3">Send</button>
               </div>
-            </form>
+
+              <!-- Certificate 2 -->
+              <div class="cert">
+                <small>Certified Web Penetration Tester</small>
+                <div class="thumb"><img src="certs/screnshot-2.png" alt="Sertifikat 2" onerror="this.style.display='none'" /></div>
+                <div class="cert-actions">
+                  <button class="btn" onclick="openCert('certs/cert2.pdf','pdf')">Detail</button>
+                  <a class="btn" href="certs/cert2.pdf" target="_blank">Download</a>
+                </div>
+              </div>
+
+              <!-- Certificate 3 -->
+              <div class="cert">
+                <small>Certified Web Penetration Tester</small>
+                <div class="thumb"><img src="certs/screnshot-3.png" alt="Sertifikat 3" onerror="this.style.display='none'" /></div>
+                <div class="cert-actions">
+                  <button class="btn" onclick="openCert('certs/cert3.pdf','pdf')">Detail</button>
+                  <a class="btn" href="certs/cert3.pdf" target="_blank">Download</a>
+                </div>
+              </div>
+
+              <!-- Certificate 4 -->
+              <div class="cert">
+                <small>Certified Web Penetration Tester</small>
+                <div class="thumb"><img src="certs/screnshot-4.png" alt="Sertifikat 4" onerror="this.style.display='none'" /></div>
+                <div class="cert-actions">
+                  <button class="btn" onclick="openCert('certs/screnshot-4.png','png')">Detail</button>
+                  <a class="btn" href="certs/screnshot-4.png" target="_blank">Download</a>
+                </div>
+              </div>
+              <!--  -->
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Project / Experience</h3>
+
+            <!-- project -->
+            <div class="project">
+              <a href="https://github.com/UseBioFLY/ArcFind.git" target="_blank" style="color: white; text-decoration: none">
+                <strong>Portal Pentest - University SSO</strong>
+              </a>
+              <p class="muted">Melakukan validasi input, menemukan dan memperbaiki SSRF tingkat menengah. Membuat report dengan rekomendasi mitigasi.</p>
+            </div>
+
+            <!-- project -->
+            <div class="project">
+              <a href="https://github.com/UseBioFLY/ArcFind.git" target="_blank" style="color: white; text-decoration: none">
+                <strong>Automated Web Archive Tools (Python)</strong>
+              </a>
+              <p class="muted">This tool is useful for retrieving a list of original URLs without duplication that have been archived in the Wayback Machine.</p>
+            </div>
+
+            <!-- end project -->
+          </div>
+
+          <footer>I just Try To Do Something</footer>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal untuk preview sertifikat (pdf atau gambar) -->
+    <div id="modal" class="modal" role="dialog" aria-hidden="true">
+      <div class="inner">
+        <div class="toolbar">
+          <div id="modal-title">Preview Sertifikat</div>
+          <div>
+            <button class="btn" onclick="closeModal()">Close</button>
           </div>
         </div>
+        <div class="viewer" id="viewer"></div>
       </div>
-    </section>
-    <!-- /Contact Us -->
-
-    <!-- footer -->
-    <footer class="blue darken-3 white-text center">
-      <p class="flow-text">PRAV. Copyright 2023.</p>
-    </footer>
-    <!-- /footer -->
-
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var sidenav = document.querySelectorAll(".sidenav");
-        var sideNav = M.Sidenav.init(sidenav);
-      });
+      // --- Simple helpers to open/close certificate preview ---
+      function openCert(path, type) {
+        const modal = document.getElementById("modal");
+        const viewer = document.getElementById("viewer");
+        viewer.innerHTML = "";
 
-      // const sideNav = document.querySelectorAll('.sidenav');
-      // M.SideNav.init(sideNav);
+        // If file likely PDF, embed it; otherwise show as image
+        if (type === "pdf" || path.toLowerCase().endsWith(".pdf")) {
+          const embed = document.createElement("embed");
+          embed.src = path;
+          embed.type = "application/pdf";
+          viewer.appendChild(embed);
+        } else {
+          const img = document.createElement("img");
+          img.src = path;
+          viewer.appendChild(img);
+        }
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+      }
+      function closeModal() {
+        const modal = document.getElementById("modal");
+        const viewer = document.getElementById("viewer");
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        viewer.innerHTML = "";
+      }
 
-      const slider = document.querySelectorAll(".slider");
-      M.Slider.init(slider, {
-        indicators: false,
-        height: 300,
-        transition: 600,
-        interval: 4000,
-      });
+      // Quick stub for download CV — replace with your real PDF file path
+      function downloadPDF() {
+        // update this path to your generated CV PDF if you have one
+        const path = "cv/NamaKamu_CV.pdf";
+        window.open(path, "_blank");
+      }
 
-      const parallax = document.querySelectorAll(".parallax");
-      M.Parallax.init(parallax);
-
-      const materialbox = document.querySelectorAll(".materialboxed");
-      M.Materialbox.init(materialbox);
-
-      const scroll = document.querySelectorAll(".scrollspy");
-      M.ScrollSpy.init(scroll, {
-        scrollOffset: 50,
-      });
-
-      const dropdown = document.querySelectorAll(".dropdown-trigger");
-      M.Dropdown.init(dropdown);
+      // Small convenience: fill initials in avatar from name
+      (function fillInitials() {
+        const el = document.querySelector(".avatar");
+        const name = document.getElementById("full-name").textContent.trim();
+        const parts = name.split(/\s+/);
+        if (parts.length) {
+          el.textContent = (parts[0][0] || "") + (parts[1] ? parts[1][0] : "");
+        }
+      })();
     </script>
   </body>
 </html>
